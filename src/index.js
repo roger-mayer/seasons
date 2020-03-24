@@ -15,8 +15,18 @@ import ReactDOM from 'react-dom';
 // };
 
 
-//component - Must be CLASS, extend React.Component, define 'render method that returns jsx
+//component - Must be CLASS, extends React.Component, define 'render method that returns jsx
 class App extends React.Component{
+    //special constructor function will be instantly called to
+    // initialize state object
+    constructor(props) {
+        super(props);
+
+        this.state = {lat: null};
+
+    }
+
+    //must define render
     render(){
         window.navigator.geolocation.getCurrentPosition(
             //function callback
@@ -27,6 +37,7 @@ class App extends React.Component{
     }
 
 }
+// initialize state through constructors
 
 ReactDOM.render(
     <App />,
