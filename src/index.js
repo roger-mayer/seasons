@@ -22,9 +22,9 @@ class App extends React.Component{
     constructor(props) {
         super(props);
         //THIS IS THE ONLY TIME WE DO DIRECT ASSIGNMENT TO THIS.STATE
-        this.state = { lat: null };
+        this.state = { lat: null, errorMessage: '' };
         window.navigator.geolocation.getCurrentPosition(
-            //function callback
+            //callback function
             (position) => {
                 //call setState to update function
                 this.setState({lat: position.coords.latitude});
@@ -32,13 +32,21 @@ class App extends React.Component{
 
                 //dont write this.state.lat = position.coords.latitude
             },
-            (err) => console.log(err)
+            (err) => {
+                this.setState({ errorMessage: err.message });
+            }
         );
     }
 
     //must define render
     render(){
-        return <div>Latitude: {this.state.lat} </div>
+        return (
+            <div>
+                Latitude: {this.state.lat}
+                <br />
+                Error: {this.state.errorMessage}
+            </div>
+        );
     }
 
 }
