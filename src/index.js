@@ -1,6 +1,7 @@
 //needs code to determine user location and date
 import React from "react";
 import ReactDOM from 'react-dom';
+import SeasonDisplay from "./SeasonDisplay";
 
 
 //functional
@@ -19,13 +20,15 @@ import ReactDOM from 'react-dom';
 class App extends React.Component{
     //special constructor function will be instantly called to
     // initialize state object
-    constructor(props) {
-        super(props);
-        //THIS IS THE ONLY TIME WE DO DIRECT ASSIGNMENT TO THIS.STATE
-        this.state = { lat: null, errorMessage: '' };
+    // constructor(props) {
+    //     super(props);
+    //     //THIS IS THE ONLY TIME WE DO DIRECT ASSIGNMENT TO THIS.STATE
+    //     this.state = { lat: null, errorMessage: '' };
+    //
+    // }
 
-    }
-
+    //state can be set without using constructor
+    state = { lat: null, errorMessage: '' };
     componentDidMount() {
         window.navigator.geolocation.getCurrentPosition(
             //callback function
@@ -44,7 +47,9 @@ class App extends React.Component{
                 return <div>Error: {this.state.errorMessage}</div>;
             }
         if (!this.state.errorMessage && this.state.lat){
-            return <div> Latitude: {this.state.lat}</div>;
+            // return <div> Latitude: {this.state.lat}</div>;
+            return <SeasonDisplay lat={this.state.lat}/>
+
         }
         return  <div>Loading....</div>;
     }
