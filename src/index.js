@@ -18,7 +18,7 @@ import Spinner from "./Spinner";
 
 
 //component - Must be CLASS, extends React.Component, define 'render method that returns jsx
-class App extends React.Component{
+class App extends React.Component {
     //special constructor function will be instantly called to
     // initialize state object
     // constructor(props) {
@@ -29,7 +29,8 @@ class App extends React.Component{
     // }
 
     //state can be set without using constructor
-    state = { lat: null, errorMessage: '' };
+    state = {lat: null, errorMessage: ''};
+
     componentDidMount() {
         window.navigator.geolocation.getCurrentPosition(
             //callback function
@@ -38,28 +39,34 @@ class App extends React.Component{
                 this.setState({lat: position.coords.latitude}),
             //dont write this.state.lat = position.coords.latitude
             (err) =>
-                this.setState({ errorMessage: err.message })
-            );
+                this.setState({errorMessage: err.message})
+        );
     }
 
-    //must define render
-    render(){
-            if (this.state.errorMessage && !this.state.lat){
-                return <div>Error: {this.state.errorMessage}</div>;
-            }
-        if (!this.state.errorMessage && this.state.lat){
+    renderContent() {
+        if (this.state.errorMessage && !this.state.lat) {
+            return <div>Error: {this.state.errorMessage}</div>;
+        }
+        if (!this.state.errorMessage && this.state.lat) {
             // return <div> Latitude: {this.state.lat}</div>;
             return <SeasonDisplay lat={this.state.lat}/>;
 
         }
-        return <Spinner message="Please accept location request" />;
+        return <Spinner message="Please accept location request"/>;
     }
 
+    //must define render
+    render() {
+        return <div className="border red">
+            {this.renderContent()}
+        </div>;
+    }
 }
+
 // initialize state through constructors
 
 ReactDOM.render(
-    <App />,
+    <App/>,
     document.querySelector('#root')
 );
 
